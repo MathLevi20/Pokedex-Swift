@@ -1,0 +1,23 @@
+{
+  "configurations" : [
+    {
+      "id" : "DD012F23-8774-45DA-90A5-3D4A195E3095",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:MeuPrimeiroAppiOS.xcodeproj",
+      "identifier" : "CEF327922A54D22E00D4269E",
+      "name" : "MeuPrimeiroAppiOS"
+    }
+  },
+  "testTargets" : [
+
+  ],
+  "version" : 1
+}
