@@ -27,7 +27,17 @@ struct PokemonRowView: View {
         NavigationLink(destination: PokemonDetailView(receivedNumber: pokemon.number)) { // Adicione um NavigationLink
             
             HStack {
-                AsyncImage(url: URL(string: pokemon.image)) { image in
+                let randomColor = Color(
+                    red: Double.random(in: 0...1),
+                    green: Double.random(in: 0...1),
+                    blue: Double.random(in: 0...1)
+                )
+                
+                Rectangle()
+                    .fill(randomColor)
+                    .frame(width: 50, height: 50)
+                    .cornerRadius(8)
+                                AsyncImage(url: URL(string: pokemon.image)) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -39,31 +49,42 @@ struct PokemonRowView: View {
                 Text(String(pokemon.number))
                 Text(pokemon.name)
                 Spacer()
-                Text(pokemon.type)
+                Text(pokemon.type) .background(Color("CellBackgroundColor")) // Defina a mesma cor de fundo para garantir que a célula inteira seja colorida
             }
-        }  .navigationTitle("Navegação")
-    }
+        }
+            .navigationBarTitle("Pokedex")
 }
-
+		
 
 struct PokemonListView: View {
     @State private var pokemonList: [Pokemon] = []
     @State private var showPokemonView = false
-    
-    var body: some View {
+    @State private var searchText: String = ""
+    var filteredPokemonList: [Pokemon] {
+        if searchText.isEmpty {
+            return pokemonList
+        } else {
+            return pokemonList.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+    }
+
+        var body: some View {
 
         NavigationView {
                 VStack{
-
-            List(pokemonList, id: \.number) { pokemon in
-                PokemonRowView(pokemon: pokemon)
-            }
+                    SearchBar(text: $searchText)
+                            .padding(.horizontal)
+                        
+                    List(filteredPokemonList, id: \.number) { pokemon in
+                             PokemonRowView(pokemon: pokemon)
+                         }
         .onAppear {
             fetchData()
         }
                 }
             }
     }
+    
 
     private func fetchData() {
         guard let apiUrl = URL(string: Constants.apiURL) else {
@@ -113,7 +134,27 @@ struct PokedexApp: App {
         }
     }
 }
-
+    struct SearchBar: View {
+        @Binding var text: String
+        
+        var body: some View {
+            HStack {
+                TextField("Search", text: $text)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+                    .background(Color(.systemGray5))
+                    .cornerRadius(8)
+                
+                Button(action: {
+                    text = ""
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                        .opacity(text.isEmpty ? 0 : 1)
+                }
+            }
+        }
+    }}
 // Sample data
 let samplePokemonData = Pokemon(
     number: 2,

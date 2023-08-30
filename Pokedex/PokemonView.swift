@@ -52,13 +52,34 @@ struct PokemonDetailView: View {
                         ProgressView()
                     }
                     Text("Name: \(data.name)")
+             
                     Text("Type: \(data.type)")
-                    Text("HP: \(data.stats.hp)")
-                    Text("Attack: \(data.stats.attack)")
-                    Text("Defense: \(data.stats.defense)")
+                    HStack {
+                    Text("HP: \(data.stats.hp)").frame(width: 120, alignment: .trailing)
+
+                        ProgressBar(value: Float(data.stats.hp))
+                                  .frame(height: 10)
+                                  .padding()
+                    }
+                    HStack {
+                    Text("Attack: \(data.stats.attack)").frame(width: 120, alignment: .trailing) // Alinha o texto à direita
+
+                    ProgressBar(value: Float(data.stats.attack))
+                              .frame(height: 10)
+                        .padding()
+                        
+                    }
+                    HStack {
+                        Text("Defense: \(data.stats.defense)").frame(width: 120, alignment: .trailing) // Alinha o texto à direita
+
+                        ProgressBar(value: Float(data.stats.defense))
+                              .frame(height: 10)
+                              .padding()
+                    }
                     // ... Other stats
                     Text("Abilities: \(data.abilities.joined(separator: ", "))")
                     Text("Story: \(data.story)")
+                    
                 }
                 .padding()
             }
@@ -101,7 +122,24 @@ struct PokemonDetailView: View {
 }
 
 
-
+struct ProgressBar: View {
+    var value: Float
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .opacity(0.2)
+                
+                Rectangle()
+                    .frame(width: CGFloat(self.value) / 100 * geometry.size.width, height: geometry.size.height)
+                    .foregroundColor(.blue)
+            }
+            .cornerRadius(45.0)
+        }
+    }
+}
 
 struct PokemonDetail: View {
     let pokemonNumber: Int
