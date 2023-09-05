@@ -38,47 +38,100 @@ import SwiftUI
 struct PokemonDetailView: View {
     @State private var pokemon: Pokemon?
     let receivedNumber: Int
-    
+    @State  var dominantColor: Color?
+
     var body: some View {
         if let data = pokemon {
             ScrollView {
-                VStack(spacing: 10) {
+                VStack(spacing: 5) {
                     AsyncImage(url: URL(string: data.image)) { image in
                         image
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 200, height: 200)
-                    } placeholder: {
+                            .frame(width: 150, height: 150)
+                            .onAppear {
+                                // Example usage of the getDominantColor function
+                                getDominantColor(from: (URL(string: pokemon!.image) ?? URL(string: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"))!) { color in
+                            if let color = color {
+                                        // Assign the dominant color to your SwiftUI property
+                                        self.dominantColor = color
+                                    }
+                                }
+                            }} placeholder: {
                         ProgressView()
                     }
-                    Text("Name: \(data.name)")
-             
-                    Text("Type: \(data.type)")
-                    HStack {
-                    Text("HP: \(data.stats.hp)").frame(width: 120, alignment: .trailing)
+                    Group{
+                        Text("Name: \(data.name)")
+                 
+                        Text("Type: \(data.type)")
+                        Text("Abilities: \(data.abilities.joined(separator: ", "))")
+                    }
 
-                        ProgressBar(value: Float(data.stats.hp))
+
+                    HStack {
+                    Text("HP: \(data.stats.hp)").frame(width: 100, alignment: .trailing)
+
+                        ProgressBar(value: Float(data.stats.hp),color:dominantColor)
                                   .frame(height: 10)
                                   .padding()
                     }
                     HStack {
-                    Text("Attack: \(data.stats.attack)").frame(width: 120, alignment: .trailing) // Alinha o texto à direita
+                    Text("ATK2: \(data.stats.attack)").frame(width: 100, alignment: .trailing) // Alinha o texto à direita
 
-                    ProgressBar(value: Float(data.stats.attack))
-                              .frame(height: 10)
+                        ProgressBar(value: Float(data.stats.defense),color:dominantColor)
+                            .frame(height: 10)
                         .padding()
                         
                     }
                     HStack {
-                        Text("Defense: \(data.stats.defense)").frame(width: 120, alignment: .trailing) // Alinha o texto à direita
+                        Text("DEF: \(data.stats.defense)").frame(width: 100, alignment: .trailing) // Alinha o texto à direita
 
-                        ProgressBar(value: Float(data.stats.defense))
+                        ProgressBar(value: Float(data.stats.defense),color:dominantColor)
+                              .frame(height: 8)
+                              .padding()
+                    }
+                    HStack {
+                        Text("SATK: \(data.stats.specialAttack)").frame(width: 100, alignment: .trailing) // Alinha o texto à direita
+
+                        ProgressBar(value: Float(data.stats.specialAttack),color:dominantColor)
+                              .frame(height: 10)
+                              
+                              .padding()
+                    }
+                    HStack {
+                        Text("SDEF: \(data.stats.specialDefense)").frame(width: 100, alignment: .trailing) // Alinha o texto à direita
+
+                        ProgressBar(value: Float(data.stats.specialDefense),color:dominantColor)
                               .frame(height: 10)
                               .padding()
                     }
-                    // ... Other stats
-                    Text("Abilities: \(data.abilities.joined(separator: ", "))")
-                    Text("Story: \(data.story)")
+                    HStack {
+                        Text("SPD: \(data.stats.speed)").frame(width: 100, alignment: .trailing) // Alinha o texto à direita
+
+                        ProgressBar(value: Float(data.stats.speed),color:dominantColor)
+                              .frame(height: 10)
+                              .padding()
+                    }
+                    Group{
+                        // ... Other stats
+                        Spacer() // Cria um espaço flexível entre o texto e o padding
+
+                        Text("Story: \(data.story)")
+                            .foregroundColor(Color.white) // Cor do texto
+                            .background(dominantColor) // Cor do plano de fundo
+                            .multilineTextAlignment(.center)
+                            .background(Color.blue) // Cor de fundo do padding
+
+
+                            .padding(10) //
+                            .background(dominantColor)
+                            .cornerRadius(10) // Valor do raio da borda arredondada
+// Cor de fundo do paddingCor e largura da borda
+
+                        Spacer() // Cria um espaço flexível entre o texto e o padding
+
+                    }
+
                     
                 }
                 .padding()
@@ -120,11 +173,10 @@ struct PokemonDetailView: View {
         task.resume()
     }
 }
-
-
 struct ProgressBar: View {
     var value: Float
-    
+    var color: Color? // Adicione uma propriedade para a cor
+
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
@@ -134,12 +186,14 @@ struct ProgressBar: View {
                 
                 Rectangle()
                     .frame(width: CGFloat(self.value) / 100 * geometry.size.width, height: geometry.size.height)
-                    .foregroundColor(.blue)
+                    .foregroundColor(color) // Use a cor aqui
             }
             .cornerRadius(45.0)
         }
     }
 }
+
+
 
 struct PokemonDetail: View {
     let pokemonNumber: Int

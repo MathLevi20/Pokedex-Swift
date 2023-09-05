@@ -1,0 +1,26 @@
+PODS:
+  - SDWebImage (5.18.0):
+    - SDWebImage/Core (= 5.18.0)
+  - SDWebImage/Core (5.18.0)
+  - SDWebImageSwiftUI (2.2.3):
+    - SDWebImage (~> 5.10)
+  - UIImageColors (2.1.0)
+
+DEPENDENCIES:
+  - SDWebImageSwiftUI
+  - UIImageColors
+
+SPEC REPOS:
+  trunk:
+    - SDWebImage
+    - SDWebImageSwiftUI
+    - UIImageColors
+
+SPEC CHECKSUMS:
+  SDWebImage: 182830bcddc30cde95fbc60dfe4badc3553d94ba
+  SDWebImageSwiftUI: 17396b7889f9abc27231caaeb64c537564284aab
+  UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
+
+PODFILE CHECKSUM: 978c8074ff1c939c0643e909229f6e021cf5667c
+
+COCOAPODS: 1.12.1
