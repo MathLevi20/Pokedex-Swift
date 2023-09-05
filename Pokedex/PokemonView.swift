@@ -61,22 +61,34 @@ struct PokemonDetailView: View {
                         ProgressView()
                     }
                     Group{
-                        Text("Name: \(data.name)")
+                        Text("\(data.name)").bold()
+                            .foregroundColor(dominantColor)
                  
-                        Text("Type: \(data.type)")
-                        Text("Abilities: \(data.abilities.joined(separator: ", "))")
+                        Text("\(data.type)").bold()
+                            .foregroundColor(dominantColor)
+      
+                        Text("\(data.abilities.joined(separator: ", "))").bold()
+                            .foregroundColor(dominantColor)
+             
                     }
 
 
                     HStack {
-                    Text("HP: \(data.stats.hp)").frame(width: 100, alignment: .trailing)
+                    Text("HP: \(data.stats.hp)")
+                            .bold()
 
+                            .frame(width: 100, alignment: .trailing)
+                            .foregroundColor(dominantColor )
                         ProgressBar(value: Float(data.stats.hp),color:dominantColor)
                                   .frame(height: 10)
                                   .padding()
                     }
                     HStack {
-                    Text("ATK2: \(data.stats.attack)").frame(width: 100, alignment: .trailing) // Alinha o texto à direita
+                    Text("ATK: \(data.stats.attack)")
+                            
+                            .bold()
+                                .frame(width: 100, alignment: .trailing)
+                            .foregroundColor(dominantColor) // Alinha o texto à direita
 
                         ProgressBar(value: Float(data.stats.defense),color:dominantColor)
                             .frame(height: 10)
@@ -84,14 +96,20 @@ struct PokemonDetailView: View {
                         
                     }
                     HStack {
-                        Text("DEF: \(data.stats.defense)").frame(width: 100, alignment: .trailing) // Alinha o texto à direita
+                        Text("DEF: \(data.stats.defense)")
+                            .bold()
+                            .frame(width: 100, alignment: .trailing)
+                            .foregroundColor(dominantColor) // Alinha o texto à direita
 
                         ProgressBar(value: Float(data.stats.defense),color:dominantColor)
-                              .frame(height: 8)
+                              .frame(height: 10)
                               .padding()
                     }
                     HStack {
-                        Text("SATK: \(data.stats.specialAttack)").frame(width: 100, alignment: .trailing) // Alinha o texto à direita
+                        Text("SATK: \(data.stats.specialAttack)")
+                            .bold()
+                            .frame(width: 100, alignment: .trailing)
+                            .foregroundColor(dominantColor) // Alinha o texto à direita
 
                         ProgressBar(value: Float(data.stats.specialAttack),color:dominantColor)
                               .frame(height: 10)
@@ -99,14 +117,20 @@ struct PokemonDetailView: View {
                               .padding()
                     }
                     HStack {
-                        Text("SDEF: \(data.stats.specialDefense)").frame(width: 100, alignment: .trailing) // Alinha o texto à direita
+                        Text("SDEF: \(data.stats.specialDefense)")
+                            .bold()
+                            .frame(width: 100, alignment: .trailing)
+                            .foregroundColor(dominantColor) // Alinha o texto à direita
 
                         ProgressBar(value: Float(data.stats.specialDefense),color:dominantColor)
                               .frame(height: 10)
                               .padding()
                     }
                     HStack {
-                        Text("SPD: \(data.stats.speed)").frame(width: 100, alignment: .trailing) // Alinha o texto à direita
+                        Text("SPD: \(data.stats.speed)")
+                            .bold()
+                            .frame(width: 100, alignment: .trailing)
+                            .foregroundColor(dominantColor) // Alinha o texto à direita
 
                         ProgressBar(value: Float(data.stats.speed),color:dominantColor)
                               .frame(height: 10)
@@ -115,17 +139,22 @@ struct PokemonDetailView: View {
                     Group{
                         // ... Other stats
                         Spacer() // Cria um espaço flexível entre o texto e o padding
+                        Text("__About__").bold()
+                            .font(.title2)
+                            .foregroundColor(dominantColor) // Cor do texto
 
-                        Text("Story: \(data.story)")
+                        Spacer() // Cria um espaço flexível entre o texto e o padding
+
+                        Text("\(data.story)")
+                            .bold()
                             .foregroundColor(Color.white) // Cor do texto
                             .background(dominantColor) // Cor do plano de fundo
                             .multilineTextAlignment(.center)
-                            .background(Color.blue) // Cor de fundo do padding
+				
 
-
-                            .padding(10) //
+                            .padding(20) //
                             .background(dominantColor)
-                            .cornerRadius(10) // Valor do raio da borda arredondada
+                            .cornerRadius(20) // Valor do raio da borda arredondada
 // Cor de fundo do paddingCor e largura da borda
 
                         Spacer() // Cria um espaço flexível entre o texto e o padding
@@ -135,7 +164,7 @@ struct PokemonDetailView: View {
                     
                 }
                 .padding()
-            }
+            }.background(Color(red: 253/255, green: 253/255, blue: 253/255))
         } else {
             Text("Loading...")
                 .onAppear {
@@ -182,10 +211,10 @@ struct ProgressBar: View {
             ZStack(alignment: .leading) {
                 Rectangle()
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                    .opacity(0.2)
-                
+                    .foregroundColor(color)
+                    .opacity(0.7)
                 Rectangle()
-                    .frame(width: CGFloat(self.value) / 100 * geometry.size.width, height: geometry.size.height)
+                    .frame(width: CGFloat(self.value) / 140 * geometry.size.width, height: geometry.size.height)
                     .foregroundColor(color) // Use a cor aqui
             }
             .cornerRadius(45.0)

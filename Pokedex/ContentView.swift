@@ -1,7 +1,7 @@
 import SwiftUI
 import UIImageColors
 import SDWebImageSwiftUI
-
+import UIKit
 
 struct Pokemon: Codable {
     let number: Int
@@ -107,19 +107,21 @@ struct PokemonRowView: View {
                 }
 
 
-                Text(String(pokemon.number))
-                Text(pokemon.name)
+                Text("# \(String(pokemon.number))").foregroundColor(Color.white).bold()
+                Text((pokemon.name)).foregroundColor(Color.white).bold()
                 Spacer()
-                Text(pokemon.type).background(Color("CellBackgroundColor"))
             }
         }
         .navigationBarTitle("Pokedex")
         .background(dominantColor)
         .buttonStyle(BorderlessButtonStyle()) // Remove the white border
-        .padding(10) //
+        .padding(13) //
         .background(dominantColor)
         .cornerRadius(10)
+
+
     }
+
 
 
  
@@ -128,9 +130,7 @@ struct PokemonRowView: View {
 
 }
 
-import SwiftUI
-import UIKit
-import UIImageColors
+
 
 func getDominantColor(from imageURL: URL, completion: @escaping (Color?) -> Void) {
     // Download the image from the URL
@@ -146,10 +146,10 @@ func getDominantColor(from imageURL: URL, completion: @escaping (Color?) -> Void
                     // Convert UIColor to SwiftUI Color
                     let swiftUIColor: Color
                     
-                    if let uiColor = colors.background {
+                    if let uiColor = colors.primary {
                         if uiColor.isBlackOrVeryDark() {
                             // Se a cor for preta ou muito escura, use a cor secundária
-                            swiftUIColor = Color(colors.secondary)
+                            swiftUIColor = Color(colors.background)
                         } else {
                             swiftUIColor = Color(uiColor)
                         }
@@ -157,6 +157,7 @@ func getDominantColor(from imageURL: URL, completion: @escaping (Color?) -> Void
                     } else {
                         completion(nil)
                     }
+                    
                 } else {
                     completion(nil)
                 }
@@ -171,8 +172,13 @@ extension UIColor {
     func isBlackOrVeryDark() -> Bool {
         var white: CGFloat = 0
         self.getWhite(&white, alpha: nil)
-        return white <= 0.2 // Você pode ajustar este limite conforme necessário
+        return white <= 0.1 // Você pode ajustar este limite conforme necessário
     }
+    func isVeryLight(threshold: Double = 0.9) -> Bool {
+           var white: CGFloat = 0
+           self.getWhite(&white, alpha: nil)
+           return white >= CGFloat(threshold)
+       }
 }
 
 
@@ -208,7 +214,9 @@ struct PokemonListView: View {
                         
                         List(filteredPokemonList, id: \.number) { pokemon in
                                  PokemonRowView(pokemon: pokemon)
-                        }.listStyle(.plain)          .onAppear {
+                        }.listStyle(.plain)
+                            .padding(.top, 10)
+                                .onAppear {
                 fetchData()
             }
             
