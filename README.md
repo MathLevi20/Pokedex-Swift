@@ -21,56 +21,40 @@ Antes de começar, certifique-se de ter o seguinte instalado:
 
    ```bash
    git clone https://github.com/seu-usuario/pokedex-mobile-swift.git
-Navegue até o diretório raiz do projeto:
+2. Navegue até o diretório raiz do projeto:
 
-bash
-Copy code
-cd pokedex-mobile-swift
-Abra um terminal e execute o comando para criar um arquivo Podfile:
+         bash
+         Copy code
+         cd pokedex-mobile-swift
+3. Abra um terminal e execute o comando para criar um arquivo Podfile:
 
-bash
-Copy code
-pod init
+         bash
+         Copy code
+         pod init
 
-Edite o arquivo Podfile para adicionar as dependências do CocoaPods necessárias. Por exemplo, se você precisa do Alamofire e do SwiftyJSON, seu Podfile pode ficar assim:
+4. Edite o arquivo Podfile para adicionar as dependências do CocoaPods necessárias. Por exemplo, se você precisa do Alamofire e do SwiftyJSON, seu Podfile pode ficar assim:
 
-ruby
-Copy code
-platform :ios, '13.0'
-use_frameworks!
+         ruby
+         Copy code
+         platform :ios, '13.0'
+         use_frameworks!
 
-target 'Pokedex' do
-  pod 'Alamofire', '~> 5.0'
-  pod 'SwiftyJSON', '~> 5.0'
-end
-Salve o arquivo Podfile e, em seguida, no terminal, execute o comando para instalar as dependências:
 
-bash
-Copy code
-pod install
-Feche o projeto no Xcode e abra o arquivo .xcworkspace gerado (por exemplo, Pokedex.xcworkspace) para usar o projeto com as dependências do CocoaPods.
+5. Salve o arquivo Podfile e, em seguida, no terminal, execute o comando para instalar as dependências:
 
-Uso
+         bash
+         Copy code
+         pod install
+   
+7. Feche o projeto no Xcode e abra o arquivo .xcworkspace gerado (por exemplo, Pokedex.xcworkspace) para usar o projeto com as dependências do CocoaPods.
+
+### Uso
 Após configurar o projeto, você pode executar o aplicativo no Xcode, seja em um simulador iOS ou em um dispositivo real. Explore a Pokédex, pesquise Pokémon e aproveite!
 
-Contribuição
+### Contribuição
 Se você deseja contribuir para este projeto, siga estas etapas:
 
 Faça um fork deste repositório.
 
-Crie uma branch para a sua contribuição:
-
-bash
-Copy code
-git checkout -b minha-contribuicao
-Faça as alterações desejadas e adicione commits significativos.
-
-Envie as alterações para o seu fork:
-
-bash
-Copy code
-git push origin minha-contribuicao
-Abra um pull request para revisão.
-
-Licença
+### Licença
 Este projeto é licenciado sob a Licença MIT. Consulte o arquivo LICENSE para obter detalhes.
